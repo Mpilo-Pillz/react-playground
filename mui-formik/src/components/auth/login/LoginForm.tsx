@@ -1,7 +1,10 @@
 import React from "react";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import useShared from "../../shared/hooks/useShared";
 
 const LoginForm = () => {
+  const { navigate } = useShared();
+
   return (
     <Box
       sx={{
@@ -41,6 +44,18 @@ const LoginForm = () => {
           >
             Login
           </Button>
+          <Box textAlign={"center"}>
+            <Link
+              sx={{ mt: 2 }}
+              component="button"
+              variant="body2"
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              Don't have an Account? Click here to Register
+            </Link>
+          </Box>
         </Grid>
       </Grid>
     </Box>
