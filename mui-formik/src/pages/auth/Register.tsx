@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import React from "react";
 import useRegister from "../../components/auth/register/useRegister";
 import { AuthRequest } from "../../components/auth/types";
