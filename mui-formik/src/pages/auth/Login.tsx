@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import React from "react";
 import useLogin from "../../components/auth/login/useLogin";
 import { AuthRequest } from "../../components/auth/types";
@@ -14,11 +14,7 @@ const Login = () => {
       onSubmit={handleSubmit}
     >
       {() => {
-        return (
-          <Form>
-            <LoginForm />
-          </Form>
-        );
+        return <LoginForm />;
       }}
     </Formik>
   );
