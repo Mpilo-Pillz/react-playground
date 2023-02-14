@@ -14,13 +14,7 @@ const Register = () => {
       onSubmit={handleSubmit}
     >
       {() => {
-        return (
-          <>
-            <Form>
-              <RegisterForm />
-            </Form>
-          </>
-        );
+        return <RegisterForm />;
       }}
     </Formik>
   );
