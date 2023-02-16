@@ -1,7 +1,11 @@
 import { useCallback, useMemo } from "react";
 import * as Yup from "yup";
+import { useHttpClient } from "../../shared/hooks/useHttpClient";
+import { AuthRequest } from "../types";
 
 const useRegister = () => {
+  const { sendRequest } = useHttpClient();
+
   const initialValues = useMemo(
     () => ({
       firstName: "",
@@ -26,9 +30,18 @@ const useRegister = () => {
     ),
   });
 
-  const handleSubmit = useCallback(() => {
-    alert("Not Implemented");
-  }, []);
+  const handleSubmit = useCallback(
+    async ({ email, password, firstName, lastName }: Partial<AuthRequest>) => {
+      const body = { email, password, firstName, lastName };
+
+      await sendRequest(
+        "http://localhost:8080/api/portal/users/register",
+        "POST",
+        JSON.stringify(body)
+      );
+    },
+    [sendRequest]
+  );
 
   return { initialValues, validationSchema, handleSubmit };
 };
