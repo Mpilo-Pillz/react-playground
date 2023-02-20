@@ -37,7 +37,10 @@ const useRegister = () => {
       await sendRequest(
         "http://localhost:8080/api/portal/users/register",
         "POST",
-        JSON.stringify(body)
+        JSON.stringify(body),
+        {
+          "Content-Type": "application/json",
+        }
       );
     },
     [sendRequest]
