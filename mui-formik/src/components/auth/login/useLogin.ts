@@ -4,12 +4,19 @@ import { AuthRequest } from "../types";
 import { useHttpClient } from "../../shared/hooks/useHttpClient";
 import { USERDATA } from "../../../constants/constants";
 import useShared from "../../shared/hooks/useShared";
+import useStore from "../../../store/store";
+import { shallow } from "zustand/shallow";
 
 const useLogin = () => {
   const [token, setToken] = useState<string | null>(null);
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null>();
   const [userId, setUserId] = useState<string | null>(null);
   const { navigate } = useShared();
+  //   const toggleDarkMode = useSettingsStore((state) => state.toggleDarkMode);
+  const [setIsLoggedIn, setIsLoggedOut] = useStore(
+    (state) => [state.setIsLoggedIn, state.setIsLoggedOut],
+    shallow
+  );
 
   const { sendRequest } = useHttpClient();
 
@@ -48,6 +55,14 @@ const useLogin = () => {
     [setToken]
   );
 
+  const logout = useCallback(() => {
+    setToken(null);
+    setTokenExpirationDate(null);
+    setUserId(null);
+    localStorage.removeItem(USERDATA);
+    setIsLoggedOut();
+  }, [setToken]);
+
   const handleSubmit = useCallback(
     async ({ email, password }: Partial<AuthRequest>) => {
       const body = { email, password };
@@ -62,6 +77,7 @@ const useLogin = () => {
         );
         const { userId, token } = loginResponse;
         login(userId, token);
+        setIsLoggedIn();
         navigate("/");
       } catch (error) {
         console.error("Implement Invalid Login");
@@ -70,7 +86,7 @@ const useLogin = () => {
     []
   );
 
-  return { initialValues, validationSchema, handleSubmit };
+  return { initialValues, validationSchema, handleSubmit, logout, login };
 };
 
 export default useLogin;
