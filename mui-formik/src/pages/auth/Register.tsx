@@ -5,18 +5,21 @@ import { AuthRequest } from "../../components/auth/types";
 import RegisterForm from "../../components/auth/register/RegisterForm";
 
 const Register = () => {
-  const { initialValues, validationSchema, handleSubmit } = useRegister();
+  const { initialValues, validationSchema, handleSubmit, error } =
+    useRegister();
 
   return (
-    <Formik<Partial<AuthRequest>>
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {() => {
-        return <RegisterForm />;
-      }}
-    </Formik>
+    <>
+      <Formik<Partial<AuthRequest>>
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {() => {
+          return <RegisterForm error={error as string} />;
+        }}
+      </Formik>
+    </>
   );
 };
 
