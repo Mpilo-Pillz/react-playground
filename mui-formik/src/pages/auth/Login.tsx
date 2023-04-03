@@ -5,7 +5,7 @@ import { AuthRequest } from "../../components/auth/types";
 import LoginForm from "../../components/auth/login/LoginForm";
 
 const Login = () => {
-  const { initialValues, validationSchema, handleSubmit } = useLogin();
+  const { initialValues, validationSchema, handleSubmit, error } = useLogin();
 
   return (
     <Formik<Partial<AuthRequest>>
@@ -14,7 +14,7 @@ const Login = () => {
       onSubmit={handleSubmit}
     >
       {() => {
-        return <LoginForm />;
+        return <LoginForm error={error as string} />;
       }}
     </Formik>
   );
