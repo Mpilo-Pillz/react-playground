@@ -4,7 +4,7 @@ import { useHttpClient } from "../../shared/hooks/useHttpClient";
 import { AuthRequest } from "../types";
 
 const useRegister = () => {
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, error } = useHttpClient();
 
   const initialValues = useMemo(
     () => ({
@@ -46,7 +46,7 @@ const useRegister = () => {
     [sendRequest]
   );
 
-  return { initialValues, validationSchema, handleSubmit };
+  return { initialValues, validationSchema, handleSubmit, error };
 };
 
 export default useRegister;
