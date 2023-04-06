@@ -12,13 +12,12 @@ const useLogin = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null>();
   const [userId, setUserId] = useState<string | null>(null);
   const { navigate } = useShared();
-  //   const toggleDarkMode = useSettingsStore((state) => state.toggleDarkMode);
   const [setIsLoggedIn, setIsLoggedOut] = useStore(
     (state) => [state.setIsLoggedIn, state.setIsLoggedOut],
     shallow
   );
 
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, error } = useHttpClient();
 
   const initialValues = useMemo(
     () => ({
@@ -80,13 +79,21 @@ const useLogin = () => {
         setIsLoggedIn();
         navigate("/");
       } catch (error) {
+        // setLoginError(true);
         console.error("Implement Invalid Login");
       }
     },
     []
   );
 
-  return { initialValues, validationSchema, handleSubmit, logout, login };
+  return {
+    initialValues,
+    validationSchema,
+    handleSubmit,
+    logout,
+    login,
+    error,
+  };
 };
 
 export default useLogin;
