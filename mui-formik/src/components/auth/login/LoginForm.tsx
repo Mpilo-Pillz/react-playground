@@ -1,9 +1,20 @@
 import React from "react";
-import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import useShared from "../../shared/hooks/useShared";
 import { Field, Form } from "formik";
 
-const LoginForm = () => {
+interface Props {
+  error: string;
+}
+const LoginForm: React.FC<Props> = ({ error }) => {
   const { navigate } = useShared();
 
   return (
@@ -17,6 +28,7 @@ const LoginForm = () => {
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>
           <Grid item>
+            {!!error && <Alert severity="error">{error}</Alert>}
             <Typography textAlign={"center"} variant="h3">
               Login
             </Typography>
