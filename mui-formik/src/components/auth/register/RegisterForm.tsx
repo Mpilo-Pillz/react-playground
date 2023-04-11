@@ -1,9 +1,20 @@
 import React from "react";
-import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import useShared from "../../shared/hooks/useShared";
 import { Field, Form } from "formik";
 
-const RegisterForm = () => {
+interface Props {
+  error?: string;
+}
+const RegisterForm: React.FC<Props> = ({ error }) => {
   const { navigate } = useShared();
 
   return (
@@ -16,6 +27,12 @@ const RegisterForm = () => {
         }}
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>
+          {!!error && (
+            <Alert severity="error">
+              Registration Failed. Please Try again
+            </Alert>
+          )}
+
           <Grid item>
             <Typography textAlign={"center"} variant="h3">
               Register
