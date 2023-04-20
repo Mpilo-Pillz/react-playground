@@ -2,13 +2,13 @@ import { Formik } from "formik";
 import React from "react";
 import AddressForm from "../../components/user/AddressForm";
 import useAddress from "../../components/user/useAddress";
-import { Address } from "../../components/user/types";
+import { IAddress } from "../../components/user/types";
 
 const Address = () => {
   const { initialValues, validationSchema, handleSubmit, error } = useAddress();
 
   return (
-    <Formik<Partial<Address>>
+    <Formik<Partial<IAddress>>
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
