@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
-import { Address } from "./types";
+import { IAddress, region } from "./types";
 
 const useAddress = () => {
   const { sendRequest, error } = useHttpClient();
@@ -11,7 +11,7 @@ const useAddress = () => {
       streetNumber: "",
       streetName: "",
       postalCode: "",
-      region: "",
+      region: "Lowveld" as region,
     }),
     []
   );
@@ -31,7 +31,7 @@ const useAddress = () => {
       streetName,
       postalCode,
       region,
-    }: Partial<Address>) => {
+    }: Partial<IAddress>) => {
       const body = { streetNumber, streetName, postalCode, region };
 
       await sendRequest(
