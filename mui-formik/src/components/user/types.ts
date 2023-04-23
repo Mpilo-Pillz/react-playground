@@ -1,8 +1,8 @@
-type region = "Lowveld" | "Highveld" | "Middleveld" | "Hhohho";
+export type region = "Lowveld" | "Highveld" | "Middleveld" | "Hhohho";
 
-export interface Address {
+export interface IAddress {
   streetNumber: string;
   streetName: string;
-  postalCode: number;
+  postalCode: string;
   region: region;
 }
