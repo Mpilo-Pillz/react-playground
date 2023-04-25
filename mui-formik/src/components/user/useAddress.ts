@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react";
 import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
 import { IAddress, region } from "./types";
+import { Region } from "../../enum";
 
 const useAddress = () => {
   const { sendRequest, error } = useHttpClient();
@@ -11,7 +12,7 @@ const useAddress = () => {
       streetNumber: "",
       streetName: "",
       postalCode: "",
-      region: "Lowveld" as region,
+      region: Region.HHOHHO,
     }),
     []
   );
