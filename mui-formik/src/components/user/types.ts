@@ -1,4 +1,4 @@
-export type region = "Lowveld" | "Highveld" | "Middleveld" | "Hhohho";
+export type region = "Hhohho" | "Lubombo" | "Manzini" | "Shiselweni";
 
 export interface IAddress {
   streetNumber: string;
