@@ -5,11 +5,14 @@ import {
   Button,
   Grid,
   Link,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import useShared from "../shared/hooks/useShared";
 import { Field, Form } from "formik";
+import { Region } from "../../enum";
 
 interface Props {
   error?: string;
@@ -82,13 +85,18 @@ const AddressForm: React.FC<Props> = ({ error }) => {
           </Grid>
           <Grid item>
             <Field
-              as={TextField}
-              type="text"
+              as={Select}
+              type="select"
               name="region"
               fullWidth
               label="Region"
               id="fullWidth"
-            />
+            >
+              <MenuItem value={Region.HHOHHO}>{Region.HHOHHO}</MenuItem>
+              <MenuItem value={Region.LUBOMBO}>{Region.LUBOMBO}</MenuItem>
+              <MenuItem value={Region.MANZINI}>{Region.MANZINI}</MenuItem>
+              <MenuItem value={Region.SHISELWENI}>{Region.SHISELWENI}</MenuItem>
+            </Field>
           </Grid>
           <Grid item>
             <Button
