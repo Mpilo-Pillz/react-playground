@@ -36,10 +36,14 @@ const useAddress = () => {
       const body = { streetNumber, streetName, postalCode, region };
 
       await sendRequest(
-        "http://localhost:8080/api/portal/users/address",
+        "http://localhost:8080/api/portal/address/create-address",
         "POST",
         JSON.stringify(body),
         {
+          // TODO: get token from central place
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("userData") as string).token
+          }`,
           "Content-Type": "application/json",
         }
       );
