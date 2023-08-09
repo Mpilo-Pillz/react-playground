@@ -4,10 +4,12 @@ import { IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import useHeader from "./useHeader";
+import { Link } from "react-router-dom";
+import useLogin from "../../auth/login/useLogin";
 
 const Header = () => {
   const { isLoggedIn, anchorEl, handleMenu, handleClose } = useHeader();
-
+  const { logout } = useLogin();
   return (
     <AppBar color="default" position="static">
       <Toolbar>
@@ -20,9 +22,11 @@ const Header = () => {
         >
           <MenuIcon />
         </IconButton>
+
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Home Utility Management
+          <Link to={"/"}>Home Utility Management</Link>
         </Typography>
+
         {isLoggedIn && (
           <div>
             <IconButton
@@ -50,8 +54,14 @@ const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              {isLoggedIn ? (
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              ) : (
+                <>
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                </>
+              )}
             </Menu>
           </div>
         )}

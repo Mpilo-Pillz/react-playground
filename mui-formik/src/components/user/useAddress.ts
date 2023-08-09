@@ -1,11 +1,12 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
-import { IAddress, region } from "./types";
+import { IAddress } from "./types";
 import { Region } from "../../enum";
 
 const useAddress = () => {
   const { sendRequest, error } = useHttpClient();
+  const [addresses, setAddress] = useState<IAddress[]>([]);
 
   const initialValues = useMemo(
     () => ({
@@ -51,7 +52,37 @@ const useAddress = () => {
     [sendRequest]
   );
 
-  return { initialValues, validationSchema, handleSubmit, error };
+  const getUserAddresses = useCallback(async () => {
+    const addressResponse = await sendRequest(
+      `http://localhost:8080/api/portal/address/${
+        JSON.parse(localStorage.getItem("userData") as string).userId
+      }`,
+      "GET",
+      null,
+      {
+        // TODO: get token from central place
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("userData") as string).token
+        }`,
+        "Content-Type": "application/json",
+      }
+    );
+
+    setAddress(addressResponse.addresses);
+  }, [setAddress, addresses]);
+
+  useEffect(() => {
+    getUserAddresses();
+  }, [getUserAddresses]);
+
+  return {
+    initialValues,
+    validationSchema,
+    handleSubmit,
+    error,
+    getUserAddresses,
+    addresses,
+  };
 };
 
 export default useAddress;
