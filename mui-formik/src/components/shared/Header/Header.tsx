@@ -1,6 +1,13 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
-import { IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import useHeader from "./useHeader";
@@ -8,7 +15,13 @@ import { Link } from "react-router-dom";
 import useLogin from "../../auth/login/useLogin";
 
 const Header = () => {
-  const { isLoggedIn, anchorEl, handleMenu, handleClose } = useHeader();
+  const {
+    isLoggedIn,
+    anchorEl,
+    handleMenu,
+    handleClose,
+    handleNavItemClicked,
+  } = useHeader();
   const { logout } = useLogin();
   return (
     <AppBar color="default" position="static">
@@ -55,12 +68,15 @@ const Header = () => {
               onClose={handleClose}
             >
               {isLoggedIn ? (
-                <MenuItem onClick={logout}>Logout</MenuItem>
-              ) : (
-                <>
+                <Box>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                </>
+                  <MenuItem onClick={() => handleNavItemClicked("/account")}>
+                    My Account
+                  </MenuItem>
+                </Box>
+              ) : (
+                <MenuItem onClick={logout}>Log in</MenuItem>
               )}
             </Menu>
           </div>

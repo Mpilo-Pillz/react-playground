@@ -5,10 +5,9 @@ import { IProduct } from "../components/product/productTypes";
 
 const Home = () => {
   const { products } = useProduct();
-  console.log(products);
 
   return products?.products?.map((product: IProduct) => {
-    return <ProductCard product={product} />;
+    return <ProductCard key={product._id} product={product} />;
   });
 };
 

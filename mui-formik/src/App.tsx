@@ -6,6 +6,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Address from "./pages/user/Address";
 import Profile from "./pages/user/Profile";
+import Account from "./pages/user/Account";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/address" element={<Address />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </>
   );
