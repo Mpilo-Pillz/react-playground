@@ -7,6 +7,7 @@ import Register from "./pages/auth/Register";
 import Address from "./pages/user/Address";
 import Profile from "./pages/user/Profile";
 import Account from "./pages/user/Account";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/address" element={<Address />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </>
   );

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import { AuthRequest } from "../types";
 import { useHttpClient } from "../../shared/hooks/useHttpClient";
@@ -11,11 +11,14 @@ const useLogin = () => {
   const [token, setToken] = useState<string | null>(null);
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null>();
   const [userId, setUserId] = useState<string | null>(null);
+
   const { navigate } = useShared();
   const [setIsLoggedIn, setIsLoggedOut] = useStore(
     (state) => [state.setIsLoggedIn, state.setIsLoggedOut],
     shallow
   );
+
+  const { setUserData } = useStore();
 
   const { sendRequest, error } = useHttpClient();
 
@@ -60,7 +63,16 @@ const useLogin = () => {
     setUserId(null);
     localStorage.removeItem(USERDATA);
     setIsLoggedOut();
+    navigate("/");
   }, [setToken]);
+
+  // useEffect(() => {
+  //   // Retrieve access token from local storage
+  //   const loggedInUser = localStorage.getItem(USERDATA);
+  //   if (loggedInUser) {
+  //     setToken(loggedInUser);
+  //   }
+  // }, []);
 
   const handleSubmit = useCallback(
     async ({ email, password }: Partial<AuthRequest>) => {
@@ -74,9 +86,10 @@ const useLogin = () => {
             "Content-Type": "application/json",
           }
         );
-        const { userId, token } = loginResponse;
+        const { userId, token, expirationDate } = loginResponse;
         login(userId, token);
         setIsLoggedIn();
+        setUserData(loginResponse);
         navigate("/");
       } catch (error) {
         // setLoginError(true);

@@ -6,3 +6,9 @@ export interface IAddress {
   postalCode: string;
   region: region;
 }
+
+export interface LoggedInUser {
+  userId: string;
+  token: string;
+  expirationDate: string;
+}

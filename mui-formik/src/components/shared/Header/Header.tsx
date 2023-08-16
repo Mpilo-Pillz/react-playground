@@ -2,6 +2,7 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import {
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -13,6 +14,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import useHeader from "./useHeader";
 import { Link } from "react-router-dom";
 import useLogin from "../../auth/login/useLogin";
+import useShared from "../hooks/useShared";
 
 const Header = () => {
   const {
@@ -23,6 +25,7 @@ const Header = () => {
     handleNavItemClicked,
   } = useHeader();
   const { logout } = useLogin();
+  const { navigate } = useShared();
   return (
     <AppBar color="default" position="static">
       <Toolbar>
@@ -37,10 +40,12 @@ const Header = () => {
         </IconButton>
 
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Link to={"/"}>Home Utility Management</Link>
+          <Link style={{ color: "inherit", textDecoration: "none" }} to={"/"}>
+            Home Utility Management
+          </Link>
         </Typography>
 
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <div>
             <IconButton
               size="large"
@@ -67,19 +72,26 @@ const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              {isLoggedIn ? (
-                <Box>
-                  <MenuItem onClick={logout}>Logout</MenuItem>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={() => handleNavItemClicked("/account")}>
-                    My Account
-                  </MenuItem>
-                </Box>
-              ) : (
-                <MenuItem onClick={logout}>Log in</MenuItem>
-              )}
+              <Box>
+                <MenuItem onClick={logout}>Logout</MenuItem>
+                <MenuItem onClick={() => handleNavItemClicked("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={() => handleNavItemClicked("/account")}>
+                  My Account
+                </MenuItem>
+              </Box>
             </Menu>
           </div>
+        ) : (
+          <>
+            <Button color="inherit" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/register")}>
+              Register
+            </Button>
+          </>
         )}
       </Toolbar>
     </AppBar>

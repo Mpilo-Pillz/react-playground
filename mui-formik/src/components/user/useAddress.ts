@@ -3,8 +3,11 @@ import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
 import { IAddress } from "./types";
 import { Region } from "../../enum";
+import useStore from "../../store/store";
 
 const useAddress = () => {
+  const userData = useStore((state) => state.userData);
+
   const { sendRequest, error } = useHttpClient();
   const [addresses, setAddress] = useState<IAddress[]>([]);
 
@@ -54,26 +57,22 @@ const useAddress = () => {
 
   const getUserAddresses = useCallback(async () => {
     const addressResponse = await sendRequest(
-      `http://localhost:8080/api/portal/address/${
-        JSON.parse(localStorage.getItem("userData") as string).userId
-      }`,
+      `http://localhost:8080/api/portal/address/${userData?.userId}`,
       "GET",
       null,
       {
         // TODO: get token from central place
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("userData") as string).token
-        }`,
+        Authorization: `Bearer ${userData?.token}`,
         "Content-Type": "application/json",
       }
     );
 
     setAddress(addressResponse.addresses);
-  }, [setAddress, addresses]);
+  }, []);
 
-  useEffect(() => {
-    getUserAddresses();
-  }, [getUserAddresses]);
+  // useEffect(() => {
+  //   getUserAddresses();
+  // }, [getUserAddresses]);
 
   return {
     initialValues,
