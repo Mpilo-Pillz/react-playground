@@ -3,13 +3,14 @@ import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
 import { IAddress } from "./types";
 import { Region } from "../../enum";
-import useStore from "../../store/store";
+import useStore, { addressStore } from "../../store/store";
 
 const useAddress = () => {
   const userData = useStore((state) => state.userData);
 
   const { sendRequest, error } = useHttpClient();
   const [addresses, setAddress] = useState<IAddress[]>([]);
+  const { setUserAddresses } = addressStore();
 
   const initialValues = useMemo(
     () => ({
@@ -68,6 +69,7 @@ const useAddress = () => {
     );
 
     setAddress(addressResponse.addresses);
+    setUserAddresses(addressResponse.addresses);
   }, []);
 
   // useEffect(() => {

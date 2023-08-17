@@ -8,7 +8,7 @@ import { productStore } from "../../store/store";
 const useProduct = () => {
   const { sendRequest, error } = useHttpClient();
   const [products, setProducts] = useState<ProductResponse>();
-  const [selectedProduct, setSelectedProductDulpicate] = useState({});
+  const [selectedProduct, setSelectedProductLocal] = useState({});
   const { setSelectedProduct } = productStore();
   const { navigate } = useShared();
 
@@ -24,14 +24,17 @@ const useProduct = () => {
     (product: any) => {
       console.log("==========Product-------------", product);
       setSelectedProduct(product);
+      setSelectedProductLocal(product);
       navigate("/checkout");
     },
-    [setSelectedProduct, selectedProduct]
+    [setSelectedProduct, selectedProduct, setSelectedProductLocal, navigate]
   );
 
   useEffect(() => {
     getProducts();
   }, [getProducts]);
+
+  console.log("selectedProd", selectedProduct);
 
   return {
     error,
@@ -39,6 +42,7 @@ const useProduct = () => {
     products,
     purchaseProduct,
     selectedProduct,
+    // selectedProduct,
   };
 };
 

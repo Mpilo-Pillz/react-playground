@@ -11,6 +11,8 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { IProduct } from "../product/productTypes";
 import { Grid } from "@mui/material";
 import useProduct from "../product/useProduct";
+import useShared from "./hooks/useShared";
+import useStore from "../../store/store";
 
 interface Props {
   product: IProduct;
@@ -18,6 +20,8 @@ interface Props {
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
   const { purchaseProduct } = useProduct();
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const { navigate } = useShared();
   return (
     <Grid item xs={4}>
       <Card sx={{ width: 320, maxWidth: "100%", boxShadow: "lg", m: 3 }}>
@@ -66,14 +70,29 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
           </Typography>
         </CardContent>
         <CardOverflow>
-          <Button
-            variant="solid"
-            color="primary"
-            size="lg"
-            onClick={() => purchaseProduct(product)}
-          >
-            Subscribe
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              variant="solid"
+              color="primary"
+              size="lg"
+              onClick={() => purchaseProduct(product)}
+            >
+              Subscribe
+            </Button>
+          ) : (
+            <>
+              <Button
+                variant="solid"
+                color="primary"
+                size="lg"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login to Subscribe
+              </Button>
+            </>
+          )}
         </CardOverflow>
       </Card>
     </Grid>

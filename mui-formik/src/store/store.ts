@@ -14,6 +14,10 @@ interface ProductStore {
   selectedProduct: {};
   setSelectedProduct: (product: any) => any;
 }
+interface AddressStore {
+  userAddresses: [];
+  setUserAddresses: (address: any) => any;
+}
 
 const useStore = create<AppStore>((set) => ({
   isLoggedIn: !!localStorage.getItem(USERDATA),
@@ -38,11 +42,21 @@ const useStore = create<AppStore>((set) => ({
 export const productStore = create<ProductStore>((set) => ({
   selectedProduct: {},
   setSelectedProduct: (product: any[]) => {
-    console.log("product", product);
-    debugger;
+    // debugger;
+    console.log("productState", product);
     return set((state) => ({
-      ...state,
-      product,
+      selectedProduct: product,
+    }));
+  },
+}));
+
+export const addressStore = create<AddressStore>((set: any) => ({
+  userAddresses: [],
+  setUserAddresses: (addresses: any[]) => {
+    console.log("address", addresses);
+    // debugger;
+    return set((state: any) => ({
+      userAddresses: addresses,
     }));
   },
 }));

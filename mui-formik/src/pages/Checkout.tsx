@@ -5,22 +5,23 @@ import useCheckout from "../components/product/useCheckout";
 import CheckoutForm from "../components/product/CheckoutForm";
 
 const Checkout = () => {
-  const { addresses } = useCheckout();
+  const { addresses, initialValues, validationSchema, handleSubmit } =
+    useCheckout();
 
   //   console.log("SELECTED-->", selectedProduct);
   console.log("Adddress-->", addresses);
-  return <CheckoutForm />;
-  //   return (
-  //     <Formik<Partial<IAddress>>
-  //       initialValues={initialValues}
-  //       validationSchema={validationSchema}
-  //       onSubmit={handleSubmit}
-  //     >
-  //       {() => {
-  //         return <CheckoutForm error={error as string} />;
-  //       }}
-  //     </Formik>
-  //   );
+
+  return (
+    <Formik<Partial<any>>
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {() => {
+        return <CheckoutForm />;
+      }}
+    </Formik>
+  );
 };
 
 export default Checkout;
