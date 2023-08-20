@@ -5,11 +5,7 @@ import useCheckout from "../components/product/useCheckout";
 import CheckoutForm from "../components/product/CheckoutForm";
 
 const Checkout = () => {
-  const { addresses, initialValues, validationSchema, handleSubmit } =
-    useCheckout();
-
-  //   console.log("SELECTED-->", selectedProduct);
-  console.log("Adddress-->", addresses);
+  const { initialValues, validationSchema, handleSubmit } = useCheckout();
 
   return (
     <Formik<Partial<any>>

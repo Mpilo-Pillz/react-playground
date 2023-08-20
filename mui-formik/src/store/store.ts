@@ -25,8 +25,6 @@ const useStore = create<AppStore>((set) => ({
   setIsLoggedIn: () => set(() => ({ isLoggedIn: true })),
   setIsLoggedOut: () => set(() => ({ isLoggedIn: false })),
   setUserData: (userData: any) => {
-    console.log("product", userData);
-
     return set((state) => ({
       ...state,
       userData,
@@ -42,19 +40,15 @@ const useStore = create<AppStore>((set) => ({
 export const productStore = create<ProductStore>((set) => ({
   selectedProduct: {},
   setSelectedProduct: (product: any[]) => {
-    // debugger;
-    console.log("productState", product);
     return set((state) => ({
       selectedProduct: product,
     }));
   },
 }));
 
-export const addressStore = create<AddressStore>((set: any) => ({
+export const useAddressStore = create<AddressStore>((set: any) => ({
   userAddresses: [],
   setUserAddresses: (addresses: any[]) => {
-    console.log("address", addresses);
-    // debugger;
     return set((state: any) => ({
       userAddresses: addresses,
     }));

@@ -3,18 +3,20 @@ import useProduct from "./useProduct";
 import useAddress from "../user/useAddress";
 import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
-import { addressStore } from "../../store/store";
+import { useAddressStore } from "../../store/store";
 
 const useCheckout = () => {
-  const addresses = addressStore((state: any) => state.userAddresses);
   const { sendRequest } = useHttpClient();
+  const { userAddresses }: any = useAddressStore();
+  const initialSelectedAddressId =
+    userAddresses?.addresses?.length > 0 ? userAddresses?.addresses[0].id : "";
 
   const initialValues = useMemo(
     () => ({
       cellphone: "",
-      addresses: addresses,
+      address: initialSelectedAddressId,
     }),
-    [addresses]
+    [initialSelectedAddressId]
   );
   const validationSchema = Yup.object({
     cellphone: Yup.string(),
@@ -44,7 +46,7 @@ const useCheckout = () => {
     initialValues,
     validationSchema,
     handleSubmit,
-    addresses,
+    userAddresses,
   };
 };
 

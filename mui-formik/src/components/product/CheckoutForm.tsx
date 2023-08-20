@@ -1,7 +1,3 @@
-import React, { useEffect } from "react";
-import useProduct from "./useProduct";
-import useCheckout from "./useCheckout";
-import { Field, Form, useFormikContext } from "formik";
 import {
   Box,
   Button,
@@ -14,17 +10,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import useAddress from "../user/useAddress";
+import { Field, Form } from "formik";
+import { useEffect } from "react";
 import { productStore } from "../../store/store";
-import { IProduct } from "./productTypes";
+import useAddress from "../user/useAddress";
+import useCheckout from "./useCheckout";
 
 const CheckoutForm = () => {
   const { getUserAddresses } = useAddress();
-  const { values }: any = useFormikContext();
-  //   const { selectedProduct }: any = productStore();
+  const { userAddresses } = useCheckout();
   const selectedProduct = productStore((state: any) => state.selectedProduct);
-  //   const { products: selectedProduct } = useProduct();
-  console.log("val-->", values);
 
   useEffect(() => {
     getUserAddresses();
@@ -57,16 +52,14 @@ const CheckoutForm = () => {
               <Field
                 as={Select}
                 type="select"
-                name="addresses"
+                name="address"
                 fullWidth
                 label="Address"
                 id="fullWidth"
               >
-                {values?.addresses?.map((address: any) => {
-                  console.log("ADd-->", address);
-
+                {userAddresses?.addresses?.map((address: any) => {
                   return (
-                    <MenuItem value={address}>
+                    <MenuItem key={address._id} value={address._id}>
                       {`${address.streetNumber} ${address.streetName}`}
                     </MenuItem>
                   );

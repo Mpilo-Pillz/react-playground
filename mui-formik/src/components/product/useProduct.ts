@@ -18,23 +18,13 @@ const useProduct = () => {
     );
 
     setProducts(productResponse);
-  }, [setProducts]);
+  }, []);
 
-  const purchaseProduct = useCallback(
-    (product: any) => {
-      console.log("==========Product-------------", product);
-      setSelectedProduct(product);
-      setSelectedProductLocal(product);
-      navigate("/checkout");
-    },
-    [setSelectedProduct, selectedProduct, setSelectedProductLocal, navigate]
-  );
-
-  useEffect(() => {
-    getProducts();
-  }, [getProducts]);
-
-  console.log("selectedProd", selectedProduct);
+  const purchaseProduct = useCallback((product: any) => {
+    setSelectedProduct(product);
+    setSelectedProductLocal(product);
+    navigate("/checkout");
+  }, []);
 
   return {
     error,

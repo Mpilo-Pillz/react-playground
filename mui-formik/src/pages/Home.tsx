@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useProduct from "../components/product/useProduct";
 import ProductCard from "../components/shared/ProductCard";
 import { IProduct } from "../components/product/productTypes";
@@ -6,7 +6,11 @@ import { Container, Grid } from "@mui/material";
 import { Box } from "@mui/joy";
 
 const Home = () => {
-  const { products } = useProduct();
+  const { products, getProducts } = useProduct();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <Container>
