@@ -14,7 +14,9 @@ const useProduct = () => {
 
   const getProducts = useCallback(async () => {
     const productResponse = await sendRequest(
-      `http://localhost:8080/api/portal/products/get-products?pageNumber=1`
+      `${
+        import.meta.env.VITE_API_URL
+      }/api/portal/products/get-products?pageNumber=1`
     );
 
     setProducts(productResponse);

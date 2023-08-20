@@ -35,7 +35,9 @@ const useCheckout = () => {
       // const body = { streetNumber, streetName, postalCode, region };
 
       await sendRequest(
-        `http://localhost:8080/api/portal/subscription/${userData?.userId}/subscribe`,
+        `${import.meta.env.VITE_API_URL}/api/portal/subscription/${
+          userData?.userId
+        }/subscribe`,
         "POST",
         JSON.stringify(values),
 

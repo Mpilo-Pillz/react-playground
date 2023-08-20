@@ -8,7 +8,7 @@ const Checkout = () => {
   const { initialValues, validationSchema, handleSubmit } = useCheckout();
 
   return (
-    <Formik<Partial<any>>
+    <Formik<any>
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}

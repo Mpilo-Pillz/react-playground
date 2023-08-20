@@ -35,7 +35,7 @@ const useRegister = () => {
       const body = { email, password, firstName, lastName };
 
       await sendRequest(
-        "http://localhost:8080/api/portal/users/register",
+        `${import.meta.env.VITE_API_URL}/api/portal/users/register`,
         "POST",
         JSON.stringify(body),
         {

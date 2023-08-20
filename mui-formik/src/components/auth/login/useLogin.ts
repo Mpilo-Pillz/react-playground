@@ -79,7 +79,7 @@ const useLogin = () => {
       const body = { email, password };
       try {
         const loginResponse = await sendRequest(
-          "http://localhost:8080/api/portal/users/login",
+          `${import.meta.env.VITE_API_URL}/api/portal/users/login`,
           "POST",
           JSON.stringify(body),
           {

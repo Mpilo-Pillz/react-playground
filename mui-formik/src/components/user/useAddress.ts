@@ -41,7 +41,7 @@ const useAddress = () => {
       const body = { streetNumber, streetName, postalCode, region };
 
       await sendRequest(
-        "http://localhost:8080/api/portal/address/create-address",
+        `${import.meta.env.VITE_API_URL}/api/portal/address/create-address`,
         "POST",
         JSON.stringify(body),
         {
@@ -58,7 +58,7 @@ const useAddress = () => {
 
   const getUserAddresses = useCallback(async () => {
     const addressResponse = await sendRequest(
-      `http://localhost:8080/api/portal/address/${userData?.userId}`,
+      `${import.meta.env.VITE_API_URL}/api/portal/address/${userData?.userId}`,
       "GET",
       null,
       {

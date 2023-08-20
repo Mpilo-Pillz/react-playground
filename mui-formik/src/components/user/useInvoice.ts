@@ -7,7 +7,7 @@ const useInvoice = () => {
   const { sendRequest, error } = useHttpClient();
   const getUserInvoices = useCallback(async () => {
     const addressResponse = await sendRequest(
-      `http://localhost:8080/api/portal/invoice/${
+      `${import.meta.env.VITE_API_URL}/api/portal/invoice/${
         JSON.parse(localStorage.getItem("userData") as string).userId
       }`,
       "GET",
