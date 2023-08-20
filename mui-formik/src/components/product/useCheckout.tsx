@@ -3,38 +3,45 @@ import useProduct from "./useProduct";
 import useAddress from "../user/useAddress";
 import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
-import { useAddressStore } from "../../store/store";
+import useStore, { useAddressStore, useProductStore } from "../../store/store";
+import dayjs from "dayjs";
+import { ISubscription } from "./productTypes";
 
 const useCheckout = () => {
   const { sendRequest } = useHttpClient();
   const { userAddresses }: any = useAddressStore();
+  const selectedProduct = useProductStore(
+    (state: any) => state.selectedProduct
+  );
   const initialSelectedAddressId =
     userAddresses?.addresses?.length > 0 ? userAddresses?.addresses[0].id : "";
+  const userData = useStore((state) => state.userData);
 
   const initialValues = useMemo(
     () => ({
       cellphone: "",
       address: initialSelectedAddressId,
+      startDate: dayjs(), //tz('Africa/Kigali'),
     }),
     [initialSelectedAddressId]
   );
   const validationSchema = Yup.object({
     cellphone: Yup.string(),
+    startDate: Yup.date().required("Please select a date"),
     // addresses: Yup.string().required("Please enter your street name"),
   });
   const handleSubmit = useCallback(
-    async ({ streetNumber, streetName, postalCode, region }: Partial<any>) => {
-      const body = { streetNumber, streetName, postalCode, region };
+    async (values: ISubscription) => {
+      // const body = { streetNumber, streetName, postalCode, region };
 
       await sendRequest(
-        "http://localhost:8080/api/portal/address/create-address",
+        `http://localhost:8080/api/portal/subscription/${userData?.userId}/subscribe`,
         "POST",
-        JSON.stringify(body),
+        JSON.stringify(values),
+
         {
           // TODO: get token from central place
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("userData") as string).token
-          }`,
+          Authorization: `Bearer ${userData?.token}`,
           "Content-Type": "application/json",
         }
       );
@@ -47,6 +54,7 @@ const useCheckout = () => {
     validationSchema,
     handleSubmit,
     userAddresses,
+    selectedProduct,
   };
 };
 

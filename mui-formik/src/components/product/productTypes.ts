@@ -23,3 +23,12 @@ export interface ProductResponse {
   pages: number;
   products: IProduct[];
 }
+
+export interface ISubscription {
+  startDate: Date;
+  monthlyFee: string;
+  address: string;
+  cellphone: string;
+  plan: string;
+  description: string;
+}

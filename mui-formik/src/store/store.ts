@@ -37,7 +37,7 @@ const useStore = create<AppStore>((set) => ({
   // }
 }));
 
-export const productStore = create<ProductStore>((set) => ({
+export const useProductStore = create<ProductStore>((set) => ({
   selectedProduct: {},
   setSelectedProduct: (product: any[]) => {
     return set((state) => ({

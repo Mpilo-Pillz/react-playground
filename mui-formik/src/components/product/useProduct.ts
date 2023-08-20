@@ -3,13 +3,13 @@ import * as Yup from "yup";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
 import { IProduct, ProductResponse } from "./productTypes";
 import useShared from "../shared/hooks/useShared";
-import { productStore } from "../../store/store";
+import { useProductStore } from "../../store/store";
 
 const useProduct = () => {
   const { sendRequest, error } = useHttpClient();
   const [products, setProducts] = useState<ProductResponse>();
   const [selectedProduct, setSelectedProductLocal] = useState({});
-  const { setSelectedProduct } = productStore();
+  const { setSelectedProduct } = useProductStore();
   const { navigate } = useShared();
 
   const getProducts = useCallback(async () => {
