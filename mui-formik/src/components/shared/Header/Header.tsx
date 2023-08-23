@@ -80,6 +80,9 @@ const Header = () => {
                 <MenuItem onClick={() => handleNavItemClicked("/account")}>
                   My Account
                 </MenuItem>
+                <MenuItem onClick={() => handleNavItemClicked("/address")}>
+                  Add Address
+                </MenuItem>
               </Box>
             </Menu>
           </div>

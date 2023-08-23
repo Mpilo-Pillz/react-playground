@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAddress from "../../components/user/useAddress";
 import AddressItem from "../../components/user/AddressItem";
 import { IAddress } from "../../components/user/types";
+import useCheckout from "../../components/product/useCheckout";
 
 const Profile = () => {
-  const { addresses } = useAddress();
+  const { getUserAddresses } = useAddress();
+  const { userAddresses } = useCheckout();
 
-  return addresses.map((address: IAddress) => {
+  useEffect(() => {
+    getUserAddresses();
+  }, [getUserAddresses]);
+
+  console.log(userAddresses);
+
+  return userAddresses?.addresses?.map((address: IAddress) => {
     return <AddressItem address={address} />;
   });
 };

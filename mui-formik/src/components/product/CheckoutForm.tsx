@@ -38,21 +38,21 @@ const CheckoutForm = () => {
   }, []);
 
   return (
-    <Container sx={{ m: 3 }}>
+    // <Container sx={{ m: 3, maxWidth: "400px" }}>
+    <Card sx={{ p: 2 }}>
       <Form>
         <Box
           sx={{
-            width: 500,
-            maxWidth: "100%",
             margin: "auto",
           }}
         >
-          <CardMedia
-            component="img"
-            alt={selectedProduct.name}
-            image={selectedProduct?.image}
-          />
-          <Grid mt={16} container spacing={3} flexDirection={"column"}>
+          {/* <CardMedia
+              component="img"
+              alt={selectedProduct.name}
+              image={selectedProduct?.image}
+
+            /> */}
+          <Grid container spacing={3} flexDirection={"column"}>
             <Grid item>
               {/* {!!error && <Alert severity="error">{error}</Alert>} */}
               <Typography textAlign={"center"} variant="h4">
@@ -125,7 +125,8 @@ const CheckoutForm = () => {
           </Grid>
         </Box>
       </Form>
-    </Container>
+    </Card>
+    // </Container>
   );
 };
 
