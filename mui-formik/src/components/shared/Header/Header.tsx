@@ -39,7 +39,7 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
 
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="body2" component="div" sx={{ flexGrow: 1 }}>
           <Link style={{ color: "inherit", textDecoration: "none" }} to={"/"}>
             Home Utility Management
           </Link>
@@ -73,16 +73,16 @@ const Header = () => {
               onClose={handleClose}
             >
               <Box>
-                <MenuItem onClick={logout}>Logout</MenuItem>
+                {/* <MenuItem onClick={() => handleNavItemClicked("/account")}>
+                  My Account
+                </MenuItem> */}
                 <MenuItem onClick={() => handleNavItemClicked("/profile")}>
                   Profile
-                </MenuItem>
-                <MenuItem onClick={() => handleNavItemClicked("/account")}>
-                  My Account
                 </MenuItem>
                 <MenuItem onClick={() => handleNavItemClicked("/address")}>
                   Add Address
                 </MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Box>
             </Menu>
           </div>
