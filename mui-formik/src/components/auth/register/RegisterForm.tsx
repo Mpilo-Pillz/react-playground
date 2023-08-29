@@ -24,6 +24,7 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
           width: 500,
           maxWidth: "100%",
           margin: "auto",
+          padding: 2,
         }}
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>

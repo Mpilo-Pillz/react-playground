@@ -4,6 +4,7 @@ type httpRequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>();
 
   const activeHttpRequests = useRef<AbortController[]>([]);
@@ -38,6 +39,7 @@ export const useHttpClient = () => {
         }
 
         setIsLoading(false);
+        setIsSuccess(true);
         return responseData;
       } catch (err: any) {
         console.log(err);
@@ -47,12 +49,12 @@ export const useHttpClient = () => {
         throw err;
       }
     },
-    []
+    [setIsSuccess]
   );
 
   const clearError = () => {
     setError(null);
   };
 
-  return { isLoading, error, sendRequest, clearError };
+  return { isLoading, error, sendRequest, clearError, isSuccess };
 };
