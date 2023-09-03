@@ -14,7 +14,7 @@ const Login = () => {
       onSubmit={handleSubmit}
     >
       {() => {
-        return <LoginForm error={error as string} />;
+        return <LoginForm responseError={error as string} />;
       }}
     </Formik>
   );
