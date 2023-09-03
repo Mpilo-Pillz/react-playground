@@ -31,8 +31,12 @@ const useLogin = () => {
   );
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required!"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is Required"),
+    password: Yup.string()
+      .min(4, "Password is too short. Must have atleast 4 characters")
+      .required("Password is required!"),
   });
 
   const login = useCallback(
@@ -66,14 +70,6 @@ const useLogin = () => {
     navigate("/");
   }, [setToken]);
 
-  // useEffect(() => {
-  //   // Retrieve access token from local storage
-  //   const loggedInUser = localStorage.getItem(USERDATA);
-  //   if (loggedInUser) {
-  //     setToken(loggedInUser);
-  //   }
-  // }, []);
-
   const handleSubmit = useCallback(
     async ({ email, password }: Partial<AuthRequest>) => {
       const body = { email, password };
@@ -86,13 +82,12 @@ const useLogin = () => {
             "Content-Type": "application/json",
           }
         );
-        const { userId, token, expirationDate } = loginResponse;
+        const { userId, token } = loginResponse;
         login(userId, token);
         setIsLoggedIn();
         setUserData(loginResponse);
         navigate("/");
       } catch (error) {
-        // setLoginError(true);
         console.error("Implement Invalid Login");
       }
     },

@@ -9,13 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 import useShared from "../../shared/hooks/useShared";
-import { Field, Form } from "formik";
+import { Field, Form, useFormikContext } from "formik";
+import { AuthRequest } from "../types";
 
 interface Props {
-  error: string;
+  responseError: string;
 }
-const LoginForm: React.FC<Props> = ({ error }) => {
+const LoginForm: React.FC<Props> = ({ responseError }) => {
   const { navigate } = useShared();
+  const { errors, touched } = useFormikContext<Partial<AuthRequest>>();
 
   return (
     <Form>
@@ -29,7 +31,7 @@ const LoginForm: React.FC<Props> = ({ error }) => {
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>
           <Grid item>
-            {!!error && <Alert severity="error">{error}</Alert>}
+            {!!responseError && <Alert severity="error">{responseError}</Alert>}
             <Typography textAlign={"center"} variant="h3">
               Login
             </Typography>
@@ -46,6 +48,8 @@ const LoginForm: React.FC<Props> = ({ error }) => {
               label="Email"
               id="fullWidth"
               as={TextField}
+              error={errors.email}
+              helperText={errors.email && touched ? errors.email : ""}
             />
           </Grid>
           <Grid item>
@@ -55,6 +59,8 @@ const LoginForm: React.FC<Props> = ({ error }) => {
               label="Password"
               id="fullWidth"
               as={TextField}
+              error={errors.password}
+              helperText={errors.password && touched ? errors.password : ""}
             />
           </Grid>
           <Grid item>
