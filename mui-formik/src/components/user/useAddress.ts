@@ -10,6 +10,7 @@ const useAddress = () => {
 
   const { sendRequest, error } = useHttpClient();
   const [addresses, setAddress] = useState<IAddress[]>([]);
+  const [responseData, setResponseData] = useState<any>({});
   const { setUserAddresses } = useAddressStore();
 
   const initialValues = useMemo(
@@ -18,6 +19,7 @@ const useAddress = () => {
       streetName: "",
       postalCode: "",
       region: Region.HHOHHO,
+      town: "",
     }),
     []
   );
@@ -25,22 +27,21 @@ const useAddress = () => {
   const validationSchema = Yup.object({
     streetNumber: Yup.string(),
     streetName: Yup.string().required("Please enter your street name"),
-    postalCode: Yup.string().required("Please enter your email"),
+    postalCode: Yup.string().required("Please enter your postal code"),
+    town: Yup.string().required("Please enter your town"),
     region: Yup.string().required(
       "Please enter either Highveld, Lowveld, Middleveld or Hhohho"
     ),
   });
 
   const handleSubmit = useCallback(
-    async ({
-      streetNumber,
-      streetName,
-      postalCode,
-      region,
-    }: Partial<IAddress>) => {
+    async (
+      { streetNumber, streetName, postalCode, region }: Partial<IAddress>,
+      { resetForm }: any
+    ) => {
       const body = { streetNumber, streetName, postalCode, region };
 
-      await sendRequest(
+      const response = await sendRequest(
         `${import.meta.env.VITE_API_URL}/api/portal/address/create-address`,
         "POST",
         JSON.stringify(body),
@@ -52,8 +53,13 @@ const useAddress = () => {
           "Content-Type": "application/json",
         }
       );
+
+      if (response.address.streetName) {
+        setResponseData(response.address);
+        resetForm();
+      }
     },
-    [sendRequest]
+    [sendRequest, setResponseData]
   );
 
   const getUserAddresses = useCallback(async () => {
@@ -72,10 +78,6 @@ const useAddress = () => {
     setUserAddresses(addressResponse);
   }, []);
 
-  // useEffect(() => {
-  //   getUserAddresses();
-  // }, [getUserAddresses]);
-
   return {
     initialValues,
     validationSchema,
@@ -83,6 +85,7 @@ const useAddress = () => {
     error,
     getUserAddresses,
     addresses,
+    responseData,
   };
 };
 

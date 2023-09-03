@@ -5,6 +5,7 @@ export interface IAddress {
   streetName: string;
   postalCode: string;
   region: region;
+  town: string;
 }
 
 export interface LoggedInUser {

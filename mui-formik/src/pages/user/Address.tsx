@@ -5,7 +5,8 @@ import useAddress from "../../components/user/useAddress";
 import { IAddress } from "../../components/user/types";
 
 const Address = () => {
-  const { initialValues, validationSchema, handleSubmit, error } = useAddress();
+  const { initialValues, validationSchema, handleSubmit, error, responseData } =
+    useAddress();
 
   return (
     <Formik<Partial<IAddress>>
@@ -14,7 +15,12 @@ const Address = () => {
       onSubmit={handleSubmit}
     >
       {() => {
-        return <AddressForm error={error as string} />;
+        return (
+          <AddressForm
+            errorResponse={error as string}
+            responseData={responseData}
+          />
+        );
       }}
     </Formik>
   );
