@@ -11,14 +11,23 @@ import {
   Typography,
 } from "@mui/material";
 import useShared from "../shared/hooks/useShared";
-import { Field, Form } from "formik";
+import { Field, Form, useFormikContext } from "formik";
 import { Region } from "../../enum";
+import { IAddress } from "./types";
 
 interface Props {
-  error?: string;
+  errorResponse?: string;
+  responseData: { streetName: string };
 }
-const AddressForm: React.FC<Props> = ({ error }) => {
+const AddressForm: React.FC<Props> = ({ errorResponse, responseData }) => {
   const { navigate } = useShared();
+  const { isSubmitting, errors, touched } =
+    useFormikContext<Partial<IAddress>>();
+
+  const buttonColor =
+    isSubmitting || !!errors.streetName || !!errors.postalCode || !!errors.town
+      ? "#f6f6f6"
+      : "#0E2954";
 
   return (
     <Form>
@@ -30,10 +39,14 @@ const AddressForm: React.FC<Props> = ({ error }) => {
         }}
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>
-          {!!error && (
+          {!!errorResponse && (
             <Alert severity="error">
               Couldnt add Address. Please try again
             </Alert>
+          )}
+
+          {!!responseData.streetName && (
+            <Alert severity="success">Address added Successfully</Alert>
           )}
 
           <Grid item>
@@ -62,6 +75,8 @@ const AddressForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Street Name"
               id="fullWidth"
+              error={errors.streetName}
+              helperText={errors.streetName && touched ? errors.streetName : ""}
             />
           </Grid>
           <Grid item>
@@ -71,6 +86,8 @@ const AddressForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Town"
               id="fullWidth"
+              error={errors.town}
+              helperText={errors.town && touched ? errors.town : ""}
             />
           </Grid>
           <Grid item>
@@ -81,6 +98,8 @@ const AddressForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Postal Code"
               id="fullWidth"
+              error={errors.postalCode}
+              helperText={errors.postalCode && touched ? errors.postalCode : ""}
             />
           </Grid>
           <Grid item>
@@ -104,7 +123,7 @@ const AddressForm: React.FC<Props> = ({ error }) => {
               variant="contained"
               size="large"
               fullWidth
-              style={{ backgroundColor: "#0E2954" }}
+              style={{ backgroundColor: buttonColor }}
             >
               Add Address
             </Button>
