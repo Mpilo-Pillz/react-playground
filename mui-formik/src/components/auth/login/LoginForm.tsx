@@ -17,7 +17,11 @@ interface Props {
 }
 const LoginForm: React.FC<Props> = ({ responseError }) => {
   const { navigate } = useShared();
-  const { errors, touched } = useFormikContext<Partial<AuthRequest>>();
+  const { isSubmitting, errors, touched } =
+    useFormikContext<Partial<AuthRequest>>();
+
+  const buttonColor =
+    isSubmitting || !!errors.email || !!errors.password ? "#f6f6f6" : "#0E2954";
 
   return (
     <Form>
@@ -69,7 +73,8 @@ const LoginForm: React.FC<Props> = ({ responseError }) => {
               variant="contained"
               size="large"
               fullWidth
-              style={{ backgroundColor: "#0E2954" }}
+              style={{ backgroundColor: buttonColor }}
+              disabled={isSubmitting || !!errors.email || !!errors.password}
             >
               Login
             </Button>
