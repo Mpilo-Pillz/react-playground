@@ -16,7 +16,7 @@ const Register = () => {
         onSubmit={handleSubmit}
       >
         {() => {
-          return <RegisterForm error={error as string} />;
+          return <RegisterForm responseError={error as string} />;
         }}
       </Formik>
     </>
