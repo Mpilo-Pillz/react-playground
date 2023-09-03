@@ -9,13 +9,26 @@ import {
   Typography,
 } from "@mui/material";
 import useShared from "../../shared/hooks/useShared";
-import { Field, Form } from "formik";
+import { Field, Form, useFormikContext } from "formik";
+import { AuthRequest } from "../types";
 
 interface Props {
-  error?: string;
+  responseError?: string;
 }
-const RegisterForm: React.FC<Props> = ({ error }) => {
+const RegisterForm: React.FC<Props> = ({ responseError }) => {
   const { navigate } = useShared();
+  const { isSubmitting, errors, touched } = useFormikContext<AuthRequest>();
+
+  const { firstName, lastName, email, password, confirmPassword } = errors;
+  const formIsInvalid =
+    isSubmitting ||
+    !!email ||
+    !!password ||
+    !!firstName ||
+    !!lastName ||
+    !!confirmPassword;
+
+  const buttonColor = formIsInvalid ? "#f6f6f6" : "#0E2954";
 
   return (
     <Form>
@@ -28,7 +41,7 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
         }}
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>
-          {!!error && (
+          {!!responseError && (
             <Alert severity="error">
               Registration Failed. Please Try again
             </Alert>
@@ -51,6 +64,8 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
               label="First Name"
               id="fullWidth"
               as={TextField}
+              error={errors.firstName}
+              helperText={errors.firstName && touched ? errors.firstName : ""}
             />
           </Grid>
           <Grid item>
@@ -60,6 +75,8 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Last Name"
               id="fullWidth"
+              error={errors.lastName}
+              helperText={errors.lastName && touched ? errors.lastName : ""}
             />
           </Grid>
           <Grid item>
@@ -69,6 +86,8 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Email"
               id="fullWidth"
+              error={errors.email}
+              helperText={errors.email && touched ? errors.email : ""}
             />
           </Grid>
           <Grid item>
@@ -79,6 +98,8 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Password"
               id="fullWidth"
+              error={errors.password}
+              helperText={errors.password && touched ? errors.password : ""}
             />
           </Grid>
           <Grid item>
@@ -89,6 +110,10 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
               fullWidth
               label="Confirm Password"
               id="fullWidth"
+              error={errors.confirmPassword}
+              helperText={
+                errors.confirmPassword && touched ? errors.confirmPassword : ""
+              }
             />
           </Grid>
           <Grid item>
@@ -97,7 +122,8 @@ const RegisterForm: React.FC<Props> = ({ error }) => {
               variant="contained"
               size="large"
               fullWidth
-              style={{ backgroundColor: "#0E2954" }}
+              style={{ backgroundColor: buttonColor }}
+              disabled={formIsInvalid}
             >
               Register
             </Button>
