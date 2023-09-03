@@ -20,8 +20,9 @@ const LoginForm: React.FC<Props> = ({ responseError }) => {
   const { isSubmitting, errors, touched } =
     useFormikContext<Partial<AuthRequest>>();
 
-  const buttonColor =
-    isSubmitting || !!errors.email || !!errors.password ? "#f6f6f6" : "#0E2954";
+  const formIsInvalid = isSubmitting || !!errors.email || !!errors.password;
+
+  const buttonColor = formIsInvalid ? "#f6f6f6" : "#0E2954";
 
   return (
     <Form>
@@ -74,7 +75,7 @@ const LoginForm: React.FC<Props> = ({ responseError }) => {
               size="large"
               fullWidth
               style={{ backgroundColor: buttonColor }}
-              disabled={isSubmitting || !!errors.email || !!errors.password}
+              disabled={formIsInvalid}
             >
               Login
             </Button>

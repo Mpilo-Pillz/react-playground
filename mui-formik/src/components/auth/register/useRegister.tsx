@@ -23,7 +23,7 @@ const useRegister = () => {
     email: Yup.string()
       .email("Invalid email format")
       .required("Please enter your email"),
-    password: Yup.string().required("Please enter your password").min(8),
+    password: Yup.string().required("Please enter your password").min(4),
     confirmPassword: Yup.string().oneOf(
       [Yup.ref("password")],
       "Passwords must match"
