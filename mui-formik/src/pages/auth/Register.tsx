@@ -5,7 +5,7 @@ import { AuthRequest } from "../../components/auth/types";
 import RegisterForm from "../../components/auth/register/RegisterForm";
 
 const Register = () => {
-  const { initialValues, validationSchema, handleSubmit, error } =
+  const { initialValues, validationSchema, handleSubmit, error, responseData } =
     useRegister();
 
   return (
@@ -16,7 +16,12 @@ const Register = () => {
         onSubmit={handleSubmit}
       >
         {() => {
-          return <RegisterForm responseError={error as string} />;
+          return (
+            <RegisterForm
+              responseError={error as string}
+              responseData={responseData}
+            />
+          );
         }}
       </Formik>
     </>

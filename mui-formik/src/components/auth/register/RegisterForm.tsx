@@ -14,8 +14,9 @@ import { AuthRequest } from "../types";
 
 interface Props {
   responseError?: string;
+  responseData?: { email: string };
 }
-const RegisterForm: React.FC<Props> = ({ responseError }) => {
+const RegisterForm: React.FC<Props> = ({ responseError, responseData }) => {
   const { navigate } = useShared();
   const { isSubmitting, errors, touched } = useFormikContext<AuthRequest>();
 
@@ -41,10 +42,9 @@ const RegisterForm: React.FC<Props> = ({ responseError }) => {
         }}
       >
         <Grid mt={16} container spacing={3} flexDirection={"column"}>
-          {!!responseError && (
-            <Alert severity="error">
-              Registration Failed. Please Try again
-            </Alert>
+          {!!responseError && <Alert severity="error">{responseError}</Alert>}
+          {!!responseData?.email && (
+            <Alert severity="success">{`Registration for ${responseData.email} successful`}</Alert>
           )}
 
           <Grid item>

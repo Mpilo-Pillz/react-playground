@@ -1,10 +1,13 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import * as Yup from "yup";
 import { useHttpClient } from "../../shared/hooks/useHttpClient";
 import { AuthRequest } from "../types";
+import useShared from "../../shared/hooks/useShared";
 
 const useRegister = () => {
+  const [responseData, setResponseData] = useState<any>({});
   const { sendRequest, error } = useHttpClient();
+  const { navigate } = useShared();
 
   const initialValues = useMemo(
     () => ({
@@ -34,7 +37,7 @@ const useRegister = () => {
     async ({ email, password, firstName, lastName }: Partial<AuthRequest>) => {
       const body = { email, password, firstName, lastName };
 
-      await sendRequest(
+      const response = await sendRequest(
         `${import.meta.env.VITE_API_URL}/api/portal/users/register`,
         "POST",
         JSON.stringify(body),
@@ -42,11 +45,18 @@ const useRegister = () => {
           "Content-Type": "application/json",
         }
       );
+
+      if (response?.email) {
+        setResponseData(response);
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
+      }
     },
-    [sendRequest]
+    [sendRequest, setResponseData]
   );
 
-  return { initialValues, validationSchema, handleSubmit, error };
+  return { initialValues, validationSchema, handleSubmit, error, responseData };
 };
 
 export default useRegister;
