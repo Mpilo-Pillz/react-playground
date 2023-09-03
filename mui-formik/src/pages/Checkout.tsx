@@ -5,7 +5,14 @@ import useCheckout from "../components/product/useCheckout";
 import CheckoutForm from "../components/product/CheckoutForm";
 
 const Checkout = () => {
-  const { initialValues, validationSchema, handleSubmit } = useCheckout();
+  const {
+    initialValues,
+    validationSchema,
+    handleSubmit,
+    userAddresses,
+    subscriptionSuccessful,
+    navigate,
+  } = useCheckout();
 
   return (
     <Formik<any>
@@ -14,7 +21,13 @@ const Checkout = () => {
       onSubmit={handleSubmit}
     >
       {() => {
-        return <CheckoutForm />;
+        return (
+          <CheckoutForm
+            userAddresses={userAddresses}
+            subscriptionSuccessful={subscriptionSuccessful}
+            navigate={navigate}
+          />
+        );
       }}
     </Formik>
   );

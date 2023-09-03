@@ -9,8 +9,9 @@ import { ISubscription } from "./productTypes";
 import useShared from "../shared/hooks/useShared";
 
 const useCheckout = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { sendRequest, isSuccess } = useHttpClient();
+  const { sendRequest } = useHttpClient();
+  const [subscriptionSuccessful, setSubscriptionSuccessful] =
+    useState<boolean>(false);
   const { userAddresses }: any = useAddressStore();
   const { navigate } = useShared();
   const selectedProduct = useProductStore(
@@ -29,13 +30,12 @@ const useCheckout = () => {
     [initialSelectedAddressId]
   );
   const validationSchema = Yup.object({
-    cellphone: Yup.string(),
+    cellphone: Yup.number().required("Please enter a valid Swazi number"),
     startDate: Yup.date().required("Please select a date"),
     // addresses: Yup.string().required("Please enter your street name"),
   });
 
   const handleClose = useCallback(() => {
-    setIsOpen(false);
     navigate("/address"); //change to profile
   }, []);
 
@@ -43,7 +43,7 @@ const useCheckout = () => {
     async (values: ISubscription) => {
       // const body = { streetNumber, streetName, postalCode, region };
 
-      const request = await sendRequest(
+      const response = await sendRequest(
         `${import.meta.env.VITE_API_URL}/api/portal/subscription/${
           userData?.userId
         }/subscribe`,
@@ -57,12 +57,12 @@ const useCheckout = () => {
         }
       );
 
-      console.log("requ-->", request);
-      console.log("isSucc-->", isSuccess);
-
-      setIsOpen(isSuccess);
+      if (!!response.message) {
+        setSubscriptionSuccessful(true);
+      }
+      console.log(response);
     },
-    [sendRequest, isSuccess, setIsOpen]
+    [sendRequest, setSubscriptionSuccessful]
   );
 
   return {
@@ -71,8 +71,9 @@ const useCheckout = () => {
     handleSubmit,
     userAddresses,
     selectedProduct,
-    isOpen,
+    subscriptionSuccessful,
     handleClose,
+    navigate,
   };
 };
 
