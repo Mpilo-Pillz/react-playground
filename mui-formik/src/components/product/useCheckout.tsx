@@ -25,7 +25,7 @@ const useCheckout = () => {
     () => ({
       cellphone: "",
       address: initialSelectedAddressId,
-      startDate: dayjs(), //tz('Africa/Kigali'),
+      startDate: dayjs(),
     }),
     [initialSelectedAddressId]
   );
@@ -51,7 +51,6 @@ const useCheckout = () => {
         JSON.stringify(values),
 
         {
-          // TODO: get token from central place
           Authorization: `Bearer ${userData?.token}`,
           "Content-Type": "application/json",
         }

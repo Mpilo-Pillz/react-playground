@@ -73,11 +73,11 @@ const Header = () => {
               onClose={handleClose}
             >
               <Box>
-                {/* <MenuItem onClick={() => handleNavItemClicked("/account")}>
-                  My Account
-                </MenuItem> */}
+                <MenuItem onClick={() => handleNavItemClicked("/account")}>
+                  My Bills
+                </MenuItem>
                 <MenuItem onClick={() => handleNavItemClicked("/profile")}>
-                  Profile
+                  My Addresses
                 </MenuItem>
                 <MenuItem onClick={() => handleNavItemClicked("/address")}>
                   Add Address
