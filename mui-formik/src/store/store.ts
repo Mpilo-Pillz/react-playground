@@ -18,6 +18,10 @@ interface AddressStore {
   userAddresses: [];
   setUserAddresses: (address: any) => any;
 }
+interface InvoiceStore {
+  invoices: [];
+  setUserInvoices: (invoice: any) => any;
+}
 
 const useStore = create<AppStore>((set) => ({
   isLoggedIn: !!localStorage.getItem(USERDATA),
@@ -51,6 +55,15 @@ export const useAddressStore = create<AddressStore>((set: any) => ({
   setUserAddresses: (addresses: any[]) => {
     return set((state: any) => ({
       userAddresses: addresses,
+    }));
+  },
+}));
+
+export const useInvoiceStore = create<InvoiceStore>((set: any) => ({
+  invoices: [],
+  setUserInvoices: (invoices: any[]) => {
+    return set((state: any) => ({
+      invoices: invoices,
     }));
   },
 }));
