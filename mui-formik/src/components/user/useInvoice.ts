@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHttpClient } from "../shared/hooks/useHttpClient";
 import { IInvoice } from "../invoice/invoiceTypes";
+import { useInvoiceStore } from "../../store/store";
 
 const useInvoice = () => {
   const [invoices, setInvoices] = useState<IInvoice[]>([]);
   const { sendRequest, error } = useHttpClient();
+  const { setUserInvoices } = useInvoiceStore();
   const getUserInvoices = useCallback(async () => {
-    const addressResponse = await sendRequest(
+    const invoiceResponse = await sendRequest(
       `${import.meta.env.VITE_API_URL}/api/portal/invoice/${
         JSON.parse(localStorage.getItem("userData") as string).userId
       }`,
@@ -21,13 +23,11 @@ const useInvoice = () => {
       }
     );
 
-    setInvoices(addressResponse.addresses);
+    setUserInvoices(invoiceResponse);
+    setInvoices(invoiceResponse.invoices);
   }, [setInvoices, invoices]);
 
-  useEffect(() => {
-    getUserInvoices();
-  }, [getUserInvoices]);
-  return { invoices };
+  return { invoices, getUserInvoices };
 };
 
 export default useInvoice;
