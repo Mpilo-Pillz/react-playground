@@ -23,7 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { ISubscription } from "./productTypes";
-import { IAddress } from "../user/types";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 interface Props {
   userAddresses: any;
@@ -36,11 +36,14 @@ const CheckoutForm: React.FC<Props> = ({
   navigate,
 }) => {
   const { getUserAddresses } = useAddress();
-  const { values, setFieldValue, touched, errors } =
+  const { values, setFieldValue, touched, errors, isSubmitting } =
     useFormikContext<Partial<ISubscription>>();
   const selectedProduct = useProductStore(
     (state: any) => state.selectedProduct
   );
+
+  const buttonColor =
+    isSubmitting || !!errors.cellphone ? "#f6f6f6" : "#0E2954";
 
   useEffect(() => {
     getUserAddresses();
@@ -54,13 +57,27 @@ const CheckoutForm: React.FC<Props> = ({
     <>
       <Container sx={{ mt: 3, maxWidth: "400px" }}>
         {subscriptionSuccessful ? (
-          <Card>
+          <Card sx={{ p: 5 }}>
             <Box>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Subscription Successful
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                sx={{ color: "#1A5D1A" }}
+              >
+                Subscription Successful 🎉
+              </Typography>
+              <Typography
+                id="modal-modal-title"
+                variant="h1"
+                component="h1"
+                textAlign={"center"}
+                sx={{ color: "#1A5D1A" }}
+              >
+                <ThumbUpIcon />
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                You have successfully subscribed for this product
+                You have successfully subscribed for this product ✅
               </Typography>
               <Box textAlign={"center"}>
                 <Link
@@ -68,10 +85,10 @@ const CheckoutForm: React.FC<Props> = ({
                   component="button"
                   variant="body2"
                   onClick={() => {
-                    navigate("/profile");
+                    navigate("/account");
                   }}
                 >
-                  Go to Profile
+                  Go to Bills
                 </Link>
               </Box>
             </Box>
@@ -160,15 +177,16 @@ const CheckoutForm: React.FC<Props> = ({
                     </CardContent>
                   </Grid>
                   <Grid item xs={12}>
-                    <Button
+                    <LoadingButton
                       type="submit"
                       variant="contained"
                       size="large"
                       fullWidth
-                      style={{ backgroundColor: "#0E2954" }}
+                      style={{ backgroundColor: buttonColor }}
+                      loading={isSubmitting}
                     >
                       Add to Invoice
-                    </Button>
+                    </LoadingButton>
                     {/* <pre>{JSON.stringify(values)}</pre>
                 <pre>{JSON.stringify(errors)}</pre> */}
                   </Grid>

@@ -11,6 +11,7 @@ import {
 import useShared from "../../shared/hooks/useShared";
 import { Field, Form, useFormikContext } from "formik";
 import { AuthRequest } from "../types";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 interface Props {
   responseError: string;
@@ -69,16 +70,17 @@ const LoginForm: React.FC<Props> = ({ responseError }) => {
             />
           </Grid>
           <Grid item>
-            <Button
+            <LoadingButton
               type="submit"
               variant="contained"
               size="large"
               fullWidth
               style={{ backgroundColor: buttonColor }}
               disabled={formIsInvalid}
+              loading={isSubmitting}
             >
               Login
-            </Button>
+            </LoadingButton>
             <Box textAlign={"center"}>
               <Link
                 sx={{ mt: 2 }}

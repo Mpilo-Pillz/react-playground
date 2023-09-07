@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import useShared from "../../shared/hooks/useShared";
 import { Field, Form, useFormikContext } from "formik";
 import { AuthRequest } from "../types";
@@ -117,16 +118,17 @@ const RegisterForm: React.FC<Props> = ({ responseError, responseData }) => {
             />
           </Grid>
           <Grid item>
-            <Button
+            <LoadingButton
               type="submit"
               variant="contained"
               size="large"
               fullWidth
               style={{ backgroundColor: buttonColor }}
               disabled={formIsInvalid}
+              loading={isSubmitting}
             >
               Register
-            </Button>
+            </LoadingButton>
             <Box textAlign={"center"}>
               <Link
                 sx={{ mt: 2 }}
