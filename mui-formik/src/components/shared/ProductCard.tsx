@@ -53,7 +53,7 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
           >
             {product.name}
           </Link>
-
+          <Typography level="body-sm">{product.description}</Typography>
           <Typography
             level="title-lg"
             sx={{ mt: 1, fontWeight: "xl" }}

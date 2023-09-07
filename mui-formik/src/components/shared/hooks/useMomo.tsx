@@ -3,22 +3,27 @@ import { useHttpClient } from "./useHttpClient";
 import * as Yup from "yup";
 import useStore from "../../../store/store";
 
+// completely messed this up need to revisit
 export interface MomoRequest {
   amount: string;
   cellphone: string;
+  invoice?: any;
+  invoiceId: string;
 }
-const useMomo = (amount: string) => {
+const useMomo = (amount: string, onSuccess: any, invoice: any) => {
   const userData = useStore((state) => state.userData);
-  const [invoicePaidSuccessful, setInvoicePaidSuccessful] = useState(true);
+  const [invoicePaidSuccessful, setInvoicePaidSuccessful] =
+    useState<boolean>(false);
 
   const { sendRequest, error } = useHttpClient();
 
   const initialValues = useMemo(
     () => ({
+      invoiceId: invoice._id ?? "",
       amount: amount ?? "",
       cellphone: "",
     }),
-    [amount]
+    [amount, invoice]
   );
 
   const validationSchema = Yup.object({
@@ -30,13 +35,14 @@ const useMomo = (amount: string) => {
 
   const handleSubmit = useCallback(
     async ({ amount, cellphone }: Partial<MomoRequest>) => {
-      const body = { amount, cellphone };
+      const body = { amount, cellphone, invoiceId: invoice._id };
+
       try {
         const response = await sendRequest(
-          `${import.meta.env.VITE_API_URL}api/portal/invoice/${
+          `${import.meta.env.VITE_API_URL}/api/portal/invoice/${
             userData?.userId
           }`,
-          "POST",
+          "PATCH",
           JSON.stringify(body),
           {
             Authorization: `Bearer ${userData?.token}`,
@@ -46,10 +52,11 @@ const useMomo = (amount: string) => {
 
         if (!!response.message) {
           setInvoicePaidSuccessful(true);
+          onSuccess(true);
         }
         console.log(response);
       } catch (error) {
-        console.error("Implement Invalid Login");
+        console.error("Implement Payment Failed");
       }
     },
     []
