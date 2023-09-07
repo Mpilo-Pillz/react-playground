@@ -2,7 +2,6 @@ import React from "react";
 import {
   Alert,
   Box,
-  Button,
   Grid,
   Link,
   MenuItem,
@@ -14,6 +13,7 @@ import useShared from "../shared/hooks/useShared";
 import { Field, Form, useFormikContext } from "formik";
 import { Region } from "../../enum";
 import { IAddress } from "./types";
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 
 interface Props {
   errorResponse?: string;
@@ -118,15 +118,16 @@ const AddressForm: React.FC<Props> = ({ errorResponse, responseData }) => {
             </Field>
           </Grid>
           <Grid item>
-            <Button
+            <LoadingButton
               type="submit"
               variant="contained"
               size="large"
               fullWidth
               style={{ backgroundColor: buttonColor }}
+              loading={isSubmitting}
             >
               Add Address
-            </Button>
+            </LoadingButton>
             <Box textAlign={"center"}>
               <Link
                 sx={{ mt: 2 }}
