@@ -23,8 +23,16 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   const { navigate } = useShared();
   return (
-    <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-      <Card sx={{ width: 320, maxWidth: "100%", boxShadow: "lg", my: 3 }}>
+    <Grid item xs={12} sm={12} md={6} lg={4} xl={4} height={"100%"}>
+      <Card
+        sx={{
+          width: 320,
+          maxWidth: "100%",
+          minHeight: "440px",
+          boxShadow: "lg",
+          my: 3,
+        }}
+      >
         <CardOverflow>
           <AspectRatio sx={{ minWidth: 200 }}>
             <img

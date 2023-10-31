@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import useProduct from "../components/product/useProduct";
-import ProductCard from "../components/shared/ProductCard";
-import { IProduct } from "../components/product/productTypes";
 import { Container, Grid } from "@mui/material";
-import { Box } from "@mui/joy";
+import { useEffect } from "react";
+import { IProduct } from "../components/product/productTypes";
+import useProduct from "../components/product/useProduct";
+import CardSkeletonLoader from "../components/shared/CardSkeletonLoader";
+import ProductCard from "../components/shared/ProductCard";
 
 const Home = () => {
-  const { products, getProducts } = useProduct();
+  const { products, getProducts, isLoading } = useProduct();
 
   useEffect(() => {
     getProducts();
@@ -15,9 +15,11 @@ const Home = () => {
   return (
     <Container>
       <Grid container spacing={2} justifyItems={"center"}>
-        {products?.products?.map((product: IProduct) => {
-          return <ProductCard key={product._id} product={product} />;
-        })}
+        {isLoading
+          ? Array.from({ length: 6 }).map(() => <CardSkeletonLoader />)
+          : products?.products?.map((product: IProduct) => {
+              return <ProductCard key={product._id} product={product} />;
+            })}
       </Grid>
     </Container>
   );
