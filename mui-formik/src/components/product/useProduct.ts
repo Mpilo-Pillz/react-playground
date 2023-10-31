@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import * as Yup from "yup";
-import { useHttpClient } from "../shared/hooks/useHttpClient";
-import { IProduct, ProductResponse } from "./productTypes";
-import useShared from "../shared/hooks/useShared";
+import { useCallback, useState } from "react";
 import { useProductStore } from "../../store/store";
+import { useHttpClient } from "../shared/hooks/useHttpClient";
+import useShared from "../shared/hooks/useShared";
+import { ProductResponse } from "./productTypes";
 
 const useProduct = () => {
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest, error, isLoading } = useHttpClient();
   const [products, setProducts] = useState<ProductResponse>();
   const [selectedProduct, setSelectedProductLocal] = useState({});
   const { setSelectedProduct } = useProductStore();
@@ -34,6 +33,7 @@ const useProduct = () => {
     products,
     purchaseProduct,
     selectedProduct,
+    isLoading,
     // selectedProduct,
   };
 };
