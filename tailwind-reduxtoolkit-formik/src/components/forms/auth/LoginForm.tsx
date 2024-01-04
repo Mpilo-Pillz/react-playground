@@ -1,7 +1,7 @@
 import React from "react";
 import TextInput from "../../TextInput";
-import { FormProps } from "../types";
 import Button from "../../Button";
+import { FormProps } from "../types";
 
 const LoginForm: React.FC<FormProps> = ({ isValid, loading }) => {
   return (
