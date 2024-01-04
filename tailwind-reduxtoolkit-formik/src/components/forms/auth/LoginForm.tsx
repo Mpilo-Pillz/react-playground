@@ -1,6 +1,7 @@
 import React from "react";
 import TextInput from "../../TextInput";
 import { FormProps } from "../types";
+import Button from "../../Button";
 
 const LoginForm: React.FC<FormProps> = ({ isValid, loading }) => {
   return (
@@ -16,26 +17,26 @@ const LoginForm: React.FC<FormProps> = ({ isValid, loading }) => {
       <TextInput
         id="login-password"
         name="password"
-        type="text"
+        type="password"
         placeholder="Password"
         autoComplete="on"
       />
 
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">
-          No account?
+          No account?{" "}
           <a className="underline" href="">
             Sign up
           </a>
         </p>
 
-        <button
+        <Button
           type="submit"
           className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
           disabled={!isValid || loading}
         >
           Sign in
-        </button>
+        </Button>
       </div>
     </>
   );
