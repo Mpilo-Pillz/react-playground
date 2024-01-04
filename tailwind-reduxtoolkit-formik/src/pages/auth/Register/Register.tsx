@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Formik } from "formik";
-import RegisterForm from "../../../components/forms/auth/RegisterForm";
-import { RegisterRequest } from "./types";
+import RegisterForm from "../../../components/Forms/Auth/RegisterForm";
 import useRegister from "./useRegister";
+import { RegisterRequest } from "./types";
 
 const Register = () => {
   const { initialValues, validationSchema, handleSubmit } = useRegister();
@@ -35,4 +35,5 @@ const Register = () => {
   );
 };
 
+Register.route = "/register";
 export default Register;

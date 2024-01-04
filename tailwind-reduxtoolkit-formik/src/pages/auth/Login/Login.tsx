@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
-import LoginForm from "../../../components/forms/auth/LoginForm";
-import { LoginRequest } from "./types";
+import LoginForm from "../../../components/Forms/Auth/LoginForm";
 import useLogin from "./useLogin";
+import { LoginRequest } from "./types";
 
 const Login = () => {
   const { initialValues, validationSchema, handleSubmit } = useLogin();
@@ -33,4 +33,5 @@ const Login = () => {
   );
 };
 
+Login.route = "/login";
 export default Login;
