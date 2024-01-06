@@ -4,9 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#FF5722",
-        secondary: "#2196F3",
-        tertiary: "#4CAF50",
+        elementary: "#16a085",
+        primary: "#f39c12",
+        secondary: "#16a085",
+        tertiary: "#2c3e50",
+        badge: "#2ecc71",
       },
       screens: {
         sm: "640px", //  mobile phones
