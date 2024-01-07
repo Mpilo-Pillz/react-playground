@@ -32,7 +32,7 @@ const LoginForm: React.FC<FormProps> = ({ isValid, loading }) => {
 
         <Button
           type="submit"
-          className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+          className="inline-block rounded-lg bg-secondary px-5 py-3 text-sm font-medium text-white"
           disabled={!isValid || loading}
         >
           Sign in
