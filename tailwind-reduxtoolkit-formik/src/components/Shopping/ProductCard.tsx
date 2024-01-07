@@ -43,7 +43,7 @@ const ProductCard: React.FC<Props> = ({
       />
 
       <div className="relative border border-gray-100 bg-white p-6">
-        <span className="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium">
+        <span className="whitespace-nowrap bg-badge px-3 py-1.5 text-xs font-medium">
           {" "}
           New{" "}
         </span>
@@ -55,7 +55,7 @@ const ProductCard: React.FC<Props> = ({
         <p className="mt-1.5 text-sm text-gray-700">R{price}</p>
 
         <form className="mt-4">
-          <Button className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105">
+          <Button className="block w-full rounded bg-primary p-4 text-sm font-medium transition hover:scale-105">
             {buttonText}
           </Button>
         </form>
