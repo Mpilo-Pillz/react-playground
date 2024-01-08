@@ -3,6 +3,8 @@ import PublicRoute from "./components/RouteGuards/PublicRoute";
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import Products from "./pages/Shopping/Products";
+import ProtectedRoute from "./components/RouteGuards/ProtectedRoute";
+import Cart from "./pages/Shopping/Cart/Cart";
 
 function App() {
   return (
@@ -24,6 +26,14 @@ function App() {
         }
       />
       <Route path="/" element={<Products />} />
+      <Route
+        path={Cart.route}
+        element={
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
