@@ -6,12 +6,14 @@ import Products from "./pages/Shopping/Products";
 import ProtectedRoute from "./components/RouteGuards/ProtectedRoute";
 import Cart from "./pages/Shopping/Cart/Cart";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Header from "./components/Header";
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Header />
       <Routes>
         <Route
           path={Login.route}
