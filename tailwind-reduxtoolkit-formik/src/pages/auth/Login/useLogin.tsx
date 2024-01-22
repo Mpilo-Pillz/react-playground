@@ -1,6 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 import * as Yup from "yup";
 import { useHttpClient } from "../../../hooks/useHttpClient";
+import { useDispatch } from "react-redux";
+import { useMutation } from "react-query";
+import { setCredentials } from "../../../store/slice/authSlice";
 
 interface LoginResponse {
   token: string;
@@ -12,6 +15,10 @@ interface LoginCredentials {
 }
 
 const useLogin = () => {
+  const { sendRequest, error: httpClientError } = useHttpClient();
+
+  const dispatch = useDispatch();
+
   const initialValues = useMemo(
     () => ({
       email: "",
@@ -19,8 +26,6 @@ const useLogin = () => {
     }),
     []
   );
-
-  const { sendRequest, error } = useHttpClient();
 
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email format").required("Required"),
@@ -38,17 +43,20 @@ const useLogin = () => {
         "Content-Type": "application/json",
       }
     );
-
-    if (!response.ok) {
-      throw new Error("Login failed");
-    }
-
-    return response.json();
+    return response;
   };
 
   const handleSubmit = useCallback((formValues: LoginCredentials) => {
-    login(formValues);
+    // login(formValues);
+    mutate(formValues);
   }, []);
+
+  const { mutate, isLoading, error } = useMutation(login, {
+    onSuccess: (data) => {
+      dispatch(setCredentials({ token: data.token }));
+    },
+  });
+
   return { initialValues, validationSchema, handleSubmit };
 };
 
