@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import PublicRoute from "./components/RouteGuards/PublicRoute";
-import Register from "./pages/Auth/Register/Register";
 import Products from "./pages/Shopping/Products";
 import ProtectedRoute from "./components/RouteGuards/ProtectedRoute";
 import Cart from "./pages/Shopping/Cart/Cart";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Header from "./components/Header";
 import Login from "./pages/Auth/Login/Login";
+import Register from "./pages/Auth/Register/Register";
 
 function App() {
   const queryClient = new QueryClient();
