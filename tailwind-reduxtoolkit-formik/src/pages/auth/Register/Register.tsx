@@ -1,8 +1,7 @@
-import React from "react";
 import { Form, Formik } from "formik";
 import RegisterForm from "../../../components/Forms/Auth/RegisterForm";
-import useRegister from "./useRegister";
 import { RegisterRequest } from "./types";
+import useRegister from "./useRegister";
 
 const Register = () => {
   const { initialValues, validationSchema, handleSubmit } = useRegister();

@@ -1,9 +1,8 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { logOut } from "../../store/slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import Login from "../../pages/Auth/Login/Login";
+import { logOut } from "../../store/slice/authSlice";
+import { RootState } from "../../store/store";
 
 const useAuth = () => {
   const dispatch = useDispatch();

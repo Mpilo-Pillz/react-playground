@@ -1,4 +1,3 @@
-import React from "react";
 import CartItem from "../../../components/Shopping/Cart/CartItem";
 
 const Cart = () => {

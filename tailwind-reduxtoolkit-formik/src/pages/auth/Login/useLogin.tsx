@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useHttpClient } from "../../../hooks/useHttpClient";
-import { useDispatch } from "react-redux";
-import { useMutation } from "react-query";
 import { setCredentials } from "../../../store/slice/authSlice";
 
 interface LoginResponse {
@@ -10,12 +10,12 @@ interface LoginResponse {
 }
 
 interface LoginCredentials {
-  username: string;
+  email: string;
   password: string;
 }
 
 const useLogin = () => {
-  const { sendRequest, error: httpClientError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ const useLogin = () => {
     mutate(formValues);
   }, []);
 
-  const { mutate, isLoading, error } = useMutation(login, {
+  const { mutate } = useMutation(login, {
     onSuccess: (data) => {
       dispatch(setCredentials({ token: data.token }));
     },
