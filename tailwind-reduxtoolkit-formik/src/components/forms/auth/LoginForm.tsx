@@ -2,6 +2,8 @@ import React from "react";
 import TextInput from "../../TextInput";
 import Button from "../../Button";
 import { FormProps } from "../types";
+import { Link } from "react-router-dom";
+import Register from "../../../pages/Auth/Register/Register";
 
 const LoginForm: React.FC<FormProps> = ({ isValid, loading }) => {
   return (
@@ -25,9 +27,9 @@ const LoginForm: React.FC<FormProps> = ({ isValid, loading }) => {
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">
           No account?{" "}
-          <a className="underline" href="">
+          <Link className="underline" to={Register.route}>
             Sign up
-          </a>
+          </Link>
         </p>
 
         <Button

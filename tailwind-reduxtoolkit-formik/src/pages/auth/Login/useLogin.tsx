@@ -4,15 +4,7 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useHttpClient } from "../../../hooks/useHttpClient";
 import { setCredentials } from "../../../store/slice/authSlice";
-
-interface LoginResponse {
-  token: string;
-}
-
-interface LoginCredentials {
-  email: string;
-  password: string;
-}
+import { LoginRequest, LoginResponse } from "./types";
 
 const useLogin = () => {
   const { sendRequest } = useHttpClient();
@@ -33,7 +25,7 @@ const useLogin = () => {
   });
 
   const login = async (
-    loginCredentials: LoginCredentials
+    loginCredentials: LoginRequest
   ): Promise<LoginResponse> => {
     const response = await sendRequest(
       `${import.meta.env.VITE_API_URL}/api/portal/users/login`,
@@ -46,16 +38,16 @@ const useLogin = () => {
     return response;
   };
 
-  const handleSubmit = useCallback((formValues: LoginCredentials) => {
-    // login(formValues);
-    mutate(formValues);
-  }, []);
-
   const { mutate } = useMutation(login, {
     onSuccess: (data) => {
       dispatch(setCredentials({ token: data.token }));
     },
   });
+
+  const handleSubmit = useCallback((formValues: LoginRequest) => {
+    // login(formValues);
+    mutate(formValues);
+  }, []);
 
   return { initialValues, validationSchema, handleSubmit };
 };
