@@ -5,7 +5,6 @@ import useAuth from "./useAuth";
 
 const PublicRoute: React.FC<RouteGuardProps> = ({ children }) => {
   const { isLoggedIn } = useAuth();
-  debugger;
   return !isLoggedIn ? <>{children}</> : <Navigate to="/" />;
 };
 

@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
 import useAuth from "./RouteGuards/useAuth";
+import Login from "../pages/Auth/Login/Login";
+import Register from "../pages/Auth/Register/Register";
 
 const Header = () => {
-  const { handleLogout } = useAuth();
+  const { handleLogout, isLoggedIn } = useAuth();
   return (
     <header className="bg-white">
       <div className="mx-auto flex justify-between h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8 ">
@@ -22,14 +25,34 @@ const Header = () => {
 
         <div className="flex  items-center justify-end md:justify-between">
           <div className="flex items-center gap-4">
-            <div className="sm:flex sm:gap-4">
-              <button
-                className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </div>
+            {isLoggedIn ? (
+              <div className="sm:flex sm:gap-4">
+                <button
+                  className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="sm:flex sm:gap-4">
+                  <Link
+                    className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
+                    to={Login.route}
+                  >
+                    Login
+                  </Link>
+
+                  <Link
+                    className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
+                    to={Register.route}
+                  >
+                    Register
+                  </Link>
+                </div>
+              </>
+            )}
 
             <button
               className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden"
