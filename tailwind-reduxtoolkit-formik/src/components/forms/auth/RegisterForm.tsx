@@ -55,8 +55,8 @@ const RegisterForm: React.FC<FormProps> = ({ isValid, loading }) => {
 
         <Button
           type="submit"
-          className="inline-block rounded-lg bg-secondary px-5 py-3 text-sm font-medium text-white"
           disabled={!isValid || loading}
+          variant="secondary"
         >
           Sign up
         </Button>

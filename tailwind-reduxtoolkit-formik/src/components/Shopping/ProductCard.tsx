@@ -55,9 +55,7 @@ const ProductCard: React.FC<Props> = ({
         <p className="mt-1.5 text-sm text-gray-700">R{price}</p>
 
         <form className="mt-4">
-          <Button className="block w-full rounded bg-primary p-4 text-sm font-medium transition hover:scale-105">
-            {buttonText}
-          </Button>
+          <Button>{buttonText}</Button>
         </form>
       </div>
     </div>
