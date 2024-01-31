@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import PublicRoute from "./components/RouteGuards/PublicRoute";
-import Products from "./pages/Shopping/Products";
+import Products from "./pages/Shopping/Products/Products";
 import ProtectedRoute from "./components/RouteGuards/ProtectedRoute";
 import Cart from "./pages/Shopping/Cart/Cart";
 import { QueryClient, QueryClientProvider } from "react-query";
