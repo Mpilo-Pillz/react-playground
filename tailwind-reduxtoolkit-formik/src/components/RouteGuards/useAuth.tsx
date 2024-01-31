@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Login from "../../pages/Auth/Login/Login";
 import { logOut } from "../../store/slice/authSlice";
 import { RootState } from "../../store/store";
+import useRouting from "../../hooks/useRouting";
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { navigate } = useRouting();
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = async () => {
