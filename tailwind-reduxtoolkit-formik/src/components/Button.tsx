@@ -1,6 +1,12 @@
 import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
-type Variant = "elementary" | "primary" | "secondary" | "tertiary" | "outline";
+type Variant =
+  | "elementary"
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "outline"
+  | "link";
 
 interface ButtonProps {
   variant?: Variant;
@@ -20,6 +26,7 @@ const Button: React.FC<
     primary: "bg-primary text-white",
     secondary: "bg-secondary text-white",
     tertiary: "bg-tertiary text-primary",
+    link: "text-primary hover:underline",
     outline:
       "border border-primary text-primary hover:bg-primary hover:text-white",
   };
