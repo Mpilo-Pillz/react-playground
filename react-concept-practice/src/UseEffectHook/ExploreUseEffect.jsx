@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const ExploreUseEffect = () => {
     const [resourceType, setResourceType] = useState('posts')
+    const [items, setItems] = useState([])
 
     console.log("---------------------------Runs outside use effect");
     // we need a side effect when the resource type changes
@@ -14,7 +15,13 @@ const ExploreUseEffect = () => {
     }, []) // runs only once when the component mounts
 
     useEffect(() => {
-        console.log('Resource Type Changed to: ', resourceType)
+        console.log('----Making ai call here becuasue Resource Type Changed to: ', resourceType)
+        fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+    
+        setItems(json)})
     } , [resourceType]) // runs everytime the resourceType changes
   return (
     <>
@@ -24,6 +31,9 @@ const ExploreUseEffect = () => {
         <button onClick={() => setResourceType('comments')}>Comments</button>
     </div>
     <h1>{resourceType}</h1>
+    {items.map(item => {
+        return <pre>{JSON.stringify(item)}</pre>
+    })}
     </>
   )
 }
