@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const ExploreUseMemoHook = () => {
     const [number, setNumber] = useState(0)
     const [dark, setDark] = useState(false)
-    const doubleNumber = slowFunction(number)
+    // const doubleNumber = slowFunction(number); // even when you change theme this slows the app down so cache this below
+    const doubleNumber = useMemo(() => slowFunction(number),[number]) // only recompute when number changes
     const themeStyles = {
         backgroundColor: dark ? 'black' : 'white',
         color: dark ? 'white' : 'black'
@@ -24,3 +25,6 @@ function slowFunction(num) {
 }
 
 export default ExploreUseMemoHook
+
+// Cache a Value so that you do not have to recompute it every time the component re-renders
+// can't meoise everything resulting in memeory and performance overhead
