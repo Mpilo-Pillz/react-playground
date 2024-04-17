@@ -3,15 +3,21 @@ import React, { useEffect, useRef, useState } from 'react'
 const ExploreUseRefHook = () => {
     const [name, setName] = useState('')
     const renderCount = useRef(1) // returns an object with a current property {current: 0}
+    const inputRef = useRef()
 
+    function focus() {
+        console.log(inputRef.current);
+        inputRef.current.focus()
+    }
     useEffect(() => {
         renderCount.current = renderCount.current + 1
     })
   return (
     <>
-    <input value={name} onChange={e => setName(e.target.value)} />
+    <input ref={inputRef} value={name} onChange={e => setName(e.target.value)} />
     <div>My name is {name}</div>
     <div> I rerendered {renderCount.current} times</div>
+    <button onClick={focus}>Focus</button>
     </>
   )
 }
