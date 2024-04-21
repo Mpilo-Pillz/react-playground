@@ -11,9 +11,17 @@ export default class ClassContextComponent extends Component {
     }
     render() {
         return (
-            <div>
+            <div >
                 <ThemeContext.Consumer>
-                    {darkTheme => <div>{darkTheme ? 'Dark' : 'Light'}</div>}
+                    {darkTheme => {
+                    return (
+                        <>
+<div style={this.themeStyles(darkTheme)}>Class Theme</div>
+                    <div>{darkTheme ? 'Dark' : 'Light'}</div>
+                        </>
+                    )
+                    
+                    }}
                 </ThemeContext.Consumer>
             </div>
         )
