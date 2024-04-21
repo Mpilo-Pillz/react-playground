@@ -7,8 +7,19 @@ const ExploreUseCallback = () => {
 
     // Everytime we rerender out component this function gets recreated
     const getItems = useCallback(() => {
+        // returns this actual function
         return [number, number + 1, number + 2]
     }, [number]) 
+
+    const getItemsCallback = useCallback((incrementer) => {
+        // returns this actual function
+        return [number + incrementer, number + 1 + incrementer, number + 2 + incrementer]
+    }, [number]) 
+
+    const getMemoItems = useMemo(() => {
+        // returns this Array at the botttom
+        return [number, number + 1, number + 2]
+    },[number])
 
     const theme = {
         backgroundColor: dark ? 'black' : 'white',
